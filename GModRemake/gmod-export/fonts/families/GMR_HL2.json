@@ -1,0 +1,11 @@
+{
+  "name": "GMR_HL2",
+  "faces": [
+    {
+      "name": "Regular",
+      "weight": 400,
+      "style": "normal",
+      "assetId": "rbxasset://fonts/gmr/halflife2.ttf"
+    }
+  ]
+}

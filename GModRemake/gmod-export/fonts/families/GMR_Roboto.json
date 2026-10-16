@@ -1,0 +1,17 @@
+{
+  "name": "GMR_Roboto",
+  "faces": [
+    {
+      "name": "Regular",
+      "weight": 400,
+      "style": "normal",
+      "assetId": "rbxasset://fonts/gmr/roboto.ttf"
+    },
+    {
+      "name": "Bold",
+      "weight": 700,
+      "style": "normal",
+      "assetId": "rbxasset://fonts/gmr/robotobd.ttf"
+    }
+  ]
+}

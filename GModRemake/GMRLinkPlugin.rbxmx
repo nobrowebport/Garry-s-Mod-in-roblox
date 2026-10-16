@@ -1,0 +1,44 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" version="4">
+<Item class="Script" referent="RBX00000001"><Properties><string name="Name">GMRLink</string><ProtectedString name="Source"><![CDATA[-- GMR Link plugin: HTTP transport for the sandbox's Studio Link.
+-- Plugins may talk to localhost even where game scripts can't, so during Play this
+-- answers the game's ServerStorage.GMRLink.Transport BindableFunction.
+local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+local ServerStorage = game:GetService("ServerStorage")
+
+-- Only the play-mode server DataModel needs the bridge
+if not RunService:IsRunning() or not RunService:IsServer() or RunService:IsClient() then
+	return
+end
+
+local bridge = ServerStorage:WaitForChild("GMRLink", 30)
+if not bridge then
+	return
+end
+local transport = bridge:WaitForChild("Transport")
+
+-- Only forward to a relay's /sync endpoint, nothing else
+local function allowed(url)
+	return typeof(url) == "string" and string.match(url, "^http://[%w%.%-]+:%d+/sync$") ~= nil
+end
+
+transport.OnInvoke = function(url, body)
+	if not allowed(url) or typeof(body) ~= "string" then
+		error("GMR Link plugin refused request")
+	end
+	local res = HttpService:RequestAsync({
+		Url = url,
+		Method = "POST",
+		Headers = { ["Content-Type"] = "application/json" },
+		Body = body,
+	})
+	if not res.Success then
+		error("HTTP " .. tostring(res.StatusCode))
+	end
+	return res.Body
+end
+
+bridge:SetAttribute("PluginReady", true)
+print("[GMR Link plugin] transport ready")
+]]></ProtectedString><bool name="Disabled">false</bool></Properties></Item>
+</roblox>

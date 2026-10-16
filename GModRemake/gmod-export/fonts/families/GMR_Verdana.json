@@ -1,0 +1,17 @@
+{
+  "name": "GMR_Verdana",
+  "faces": [
+    {
+      "name": "Regular",
+      "weight": 400,
+      "style": "normal",
+      "assetId": "rbxasset://fonts/gmr/verdana.ttf"
+    },
+    {
+      "name": "Bold",
+      "weight": 700,
+      "style": "normal",
+      "assetId": "rbxasset://fonts/gmr/verdanab.ttf"
+    }
+  ]
+}
